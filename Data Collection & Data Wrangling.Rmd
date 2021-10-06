@@ -30,16 +30,28 @@ USPersonalExpenditure
 
 ```{r }
 ### start solution ####
+USPersonalExpenditure<-USPersonalExpenditure
 ```
 
 
 ```{r }
+mean(USPersonalExpenditure_df$`1940`)
+mean(USPersonalExpenditure_df$`1945`)
+mean(USPersonalExpenditure_df$`1950`)
+mean(USPersonalExpenditure_df$`1960`)
+
+
 
 ```
 
 
 ```{r }
+sd(USPersonalExpenditure_df$`1940`)
+sd(USPersonalExpenditure_df$`1945`)
+sd(USPersonalExpenditure_df$`1950`)
+sd(USPersonalExpenditure_df$`1960`)
 
+mutation <-mutate(usadata , average_value = summarise_at(usadata ,vars("1940","1945","1950","1955","1960"),funs(mean),na.rm=T))
 ```
 
 
@@ -72,22 +84,27 @@ filename <- "msleep_ggplot2.csv"
 
 
 ```{r }
+mutate(msleep_gplot , Average_body_weight = summarise(msleep_gplot,mean = mean(bodywt),na.rm=TRUE))%>%select(genus,order,Average_body_weight)
 
 ```
 
 
 ```{r }
+mutate(msleep_ggplot2,average_rem=summarise(msleep_ggplot2,mean=mean(sleep_rem),na.rm=T)) %>% select(average_rem,order)
+```
+
+
+```{r }
+sum(is.na(msleep_ggplot2))
+# there are total 136 missing values 
+colSums(is.na(msleep_ggplot2)) # per column
 
 ```
 
 
 ```{r }
-
-```
-
-
-```{r }
-
+# Justification of imputing missing values 
+# I would completely take mean/mode/median of all values as find it more easy and all values will be fit in with easy way
 ```
 
 
@@ -111,12 +128,24 @@ filename <- "msleep_ggplot2.csv"
 
 
 ```{r }
+filter(msleep_ggplot2,order==c("carnivores","primates")) %>% select(order,sleep_rem,sleep_total)
+
 
 ```
 
 
 ```{r }
-
+library(tidyr)
+spread(msleep_ggplot2,order,name)
+spread(msleep_ggplot2,order,genus)
+spread(msleep_ggplot2,order,vore)
+spread(msleep_ggplot2,order,conservation)
+spread(msleep_ggplot2,order,sleep_total)
+spread(msleep_ggplot2,order,sleep_rem)
+spread(msleep_ggplot2,order,sleep_cycle)
+spread(msleep_ggplot2,order,awake)
+spread(msleep_ggplot2,order,brainwt)
+spread(msleep_ggplot2,order,bodywt)
 ```
 
 
